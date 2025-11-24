@@ -129,6 +129,7 @@ body { background-color: transparent; font-family: 'Segoe UI', sans-serif; }
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 5px;
+  color: #fff;
 }
 
 .footer-quote {
@@ -141,16 +142,21 @@ body { background-color: transparent; font-family: 'Segoe UI', sans-serif; }
 
 .footer-credit {
   font-size: 14px;
-  font-style: italic;
   opacity: 0.88;
 }
 
-.footer-credit b {
-  font-style: normal;
-  font-weight: 600;
+.footer-credit .italic {
+  font-style: italic;
 }
 
-.purple-heart { color: #a020f0; }
+.footer-credit .bold {
+  font-weight: 600;
+  font-style: normal;
+}
+
+.purple-heart {
+  color: #a020f0;
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 576px){
