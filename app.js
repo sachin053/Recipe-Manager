@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const difficultyFilter = document.getElementById("difficultyFilter");
   const timeFilter = document.getElementById("timeFilter");
+  const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 
   const viewModalBg = document.getElementById("viewModalBg");
   const viewTitle = document.getElementById("viewTitle");
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         description: "Creamy, spicy mushroom curry.",
         img: "https://www.cookwithkushi.com/wp-content/uploads/2020/03/IMG_3557_11-1024x650-1.jpg",
         prepTime: 20,
-        difficulty: "Medium",
+        difficulty: "Hard",
         ingredients: ["Mushroom", "Cream", "Garlic"],
         steps: ["Chop mushrooms", "Cook garlic & cream", "Add mushrooms", "Simmer & serve"]
       },
@@ -71,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         name: "Vegetable Stir Fry",
         description: "Quick and healthy vegetable stir fry.",
         img: "https://images.themodernproper.com/production/posts/VegetableStirFry_9.jpg?w=800&q=82&auto=format&fit=crop&dm=1703377301&s=fec7d0fbeb1b2b6b56acf09df106e7ad",
-        prepTime: 15,
+        prepTime: 20,
         difficulty: "Easy",
         ingredients: ["Broccoli", "Carrot", "Bell pepper", "Soy sauce", "Garlic"],
         steps: ["Chop vegetables", "Heat oil", "Stir fry vegetables", "Add sauce & serve"]
@@ -82,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         name: "Egg Curry",
         description: "Spicy and flavorful egg curry.",
         img: "https://www.spicebangla.com/wp-content/uploads/2024/08/Egg-Masala-Curry.webp",
-        prepTime: 25,
+        prepTime: 40,
         difficulty: "Medium",
         ingredients: ["Eggs", "Onions", "Tomatoes", "Spices", "Oil"],
         steps: ["Boil eggs", "Prepare onion-tomato gravy", "Add spices", "Add eggs & simmer"]
@@ -92,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         name: "Bhindi Masala",
         description: "Stir-fried okra with spices.",
         img: "https://www.whiskaffair.com/wp-content/uploads/2020/11/Bhindi-Masala-2-1.jpg",
-        prepTime: 20,
+        prepTime: 30,
         difficulty: "Easy",
         ingredients: ["Bhindi (Okra)", "Onion", "Tomato", "Spices", "Oil"],
         steps: ["Chop okra", "Fry onions & spices", "Add okra & cook until done"]
@@ -140,8 +141,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const diff = difficultyFilter.value;
     if (diff !== "All") filtered = filtered.filter(r => r.difficulty === diff);
 
-    const maxTime = Number(timeFilter.value);
-    if (maxTime > 0) filtered = filtered.filter(r => r.prepTime <= maxTime);
+    // handle time filter: if user typed something
+    const timeRaw = (timeFilter && timeFilter.value) ? timeFilter.value.toString().trim() : "";
+    if (timeRaw !== "") {
+      const maxTime = Number(timeRaw);
+      // if not a valid positive number -> return no recipes
+      if (isNaN(maxTime) || maxTime <= 0) return [];
+      filtered = filtered.filter(r => r.prepTime <= maxTime);
+    }
 
     return filtered;
   }
@@ -162,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "card p-0";
 
       card.innerHTML = `
-        <img src="${r.img || 'https://via.placeholder.com/400'}" class="card-img-top">
+        <img src="${r.img || 'https://via.placeholder.com/400'}" class="card-img-top" onerror="this.src='https://via.placeholder.com/400'">
         <div class="card-body">
           <h5 class="card-title">${r.name}</h5>
           <p class="card-text">${r.description}</p>
@@ -179,32 +186,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderRecipes();
 
+  // live filters
   searchInput.addEventListener("input", renderRecipes);
   difficultyFilter.addEventListener("change", renderRecipes);
-  timeFilter.addEventListener("input", renderRecipes);
+  if (timeFilter) timeFilter.addEventListener("input", renderRecipes);
+
+  // clear filters button
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      difficultyFilter.value = "All";
+      if (timeFilter) timeFilter.value = "";
+      renderRecipes();
+    });
+  }
 
   addRecipeBtn.addEventListener("click", () => {
-    editId.value = "";
-    recipeName.value = "";
-    recipeDesc.value = "";
-    recipeImg.value = "";
-    recipeTime.value = "";
-    recipeDifficulty.value = "";
-    recipeIngredients.value = "";
-    recipeSteps.value = "";
-    modalBg.style.display = "flex";
+    if (editId) editId.value = "";
+    if (recipeName) recipeName.value = "";
+    if (recipeDesc) recipeDesc.value = "";
+    if (recipeImg) recipeImg.value = "";
+    if (recipeTime) recipeTime.value = "";
+    if (recipeDifficulty) recipeDifficulty.value = "";
+    if (recipeIngredients) recipeIngredients.value = "";
+    if (recipeSteps) recipeSteps.value = "";
+    if (modalBg) modalBg.style.display = "flex";
   });
 
-  cancelBtn.addEventListener("click", () => modalBg.style.display = "none");
+  if (cancelBtn) cancelBtn.addEventListener("click", () => { if (modalBg) modalBg.style.display = "none"; });
 
-  saveBtn.addEventListener("click", () => {
-    const name = recipeName.value.trim();
-    const desc = recipeDesc.value.trim();
-    const img = recipeImg.value.trim();
-    const prepTime = Number(recipeTime.value);
-    const difficulty = recipeDifficulty.value;
-    const ingredients = recipeIngredients.value.split(",").map(i => i.trim()).filter(Boolean);
-    const steps = recipeSteps.value.split(",").map(s => s.trim()).filter(Boolean);
+  if (saveBtn) saveBtn.addEventListener("click", () => {
+    const name = recipeName ? recipeName.value.trim() : "";
+    const desc = recipeDesc ? recipeDesc.value.trim() : "";
+    const img = recipeImg ? recipeImg.value.trim() : "";
+    const prepTime = recipeTime ? Number(recipeTime.value) : 0;
+    const difficulty = recipeDifficulty ? recipeDifficulty.value : "";
+    const ingredients = recipeIngredients ? recipeIngredients.value.split(",").map(i => i.trim()).filter(Boolean) : [];
+    const steps = recipeSteps ? recipeSteps.value.split(",").map(s => s.trim()).filter(Boolean) : [];
 
     if (!name || !desc || !prepTime || !difficulty) {
       alert("Please fill all required fields!");
@@ -213,16 +231,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const list = getRecipes();
 
-    if (editId.value) {
+    if (editId && editId.value) {
       const id = Number(editId.value);
       const index = list.findIndex(r => r.id === id);
-      list[index] = { id, name, description: desc, img, prepTime, difficulty, ingredients, steps };
+      if (index !== -1) list[index] = { id, name, description: desc, img, prepTime, difficulty, ingredients, steps };
     } else {
       list.push({ id: Date.now(), name, description: desc, img, prepTime, difficulty, ingredients, steps });
     }
 
     saveRecipes(list);
-    modalBg.style.display = "none";
+    if (modalBg) modalBg.style.display = "none";
     renderRecipes();
   });
 
@@ -234,27 +252,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const action = btn.dataset.action;
     const r = getRecipes().find(x => x.id === id);
 
+    if (!r) return;
+
     if (action === "view") {
       viewTitle.innerText = r.name;
-      viewImg.src = r.img;
+      viewImg.src = r.img || 'https://via.placeholder.com/400';
       viewDesc.innerText = r.description;
       viewTime.innerText = r.prepTime;
       viewDifficulty.innerText = r.difficulty;
       viewIngredients.innerHTML = r.ingredients.map(i => `<li>${i}</li>`).join("");
       viewSteps.innerHTML = r.steps.map(s => `<li>${s}</li>`).join("");
-      viewModalBg.style.display = "flex";
+      if (viewModalBg) viewModalBg.style.display = "flex";
     }
 
     if (action === "edit") {
-      editId.value = r.id;
-      recipeName.value = r.name;
-      recipeDesc.value = r.description;
-      recipeImg.value = r.img;
-      recipeTime.value = r.prepTime;
-      recipeDifficulty.value = r.difficulty;
-      recipeIngredients.value = r.ingredients.join(", ");
-      recipeSteps.value = r.steps.join(", ");
-      modalBg.style.display = "flex";
+      if (editId) editId.value = r.id;
+      if (recipeName) recipeName.value = r.name;
+      if (recipeDesc) recipeDesc.value = r.description;
+      if (recipeImg) recipeImg.value = r.img;
+      if (recipeTime) recipeTime.value = r.prepTime;
+      if (recipeDifficulty) recipeDifficulty.value = r.difficulty;
+      if (recipeIngredients) recipeIngredients.value = r.ingredients.join(", ");
+      if (recipeSteps) recipeSteps.value = r.steps.join(", ");
+      if (modalBg) modalBg.style.display = "flex";
     }
 
     if (action === "delete") {
@@ -269,6 +289,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  closeViewBtn.addEventListener("click", () => viewModalBg.style.display = "none");
-  homeBackBtn.addEventListener("click", () => history.back());
+  if (closeViewBtn) closeViewBtn.addEventListener("click", () => { if (viewModalBg) viewModalBg.style.display = "none"; });
+  if (homeBackBtn) {
+    try {
+      homeBackBtn.addEventListener("click", () => history.back());
+    } catch (e) { /* ignore if missing */ }
+  }
 });

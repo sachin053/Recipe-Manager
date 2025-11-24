@@ -1,145 +1,164 @@
-  /* ===== Background Image Portrait Effect ===== */
-  .bg-portrait {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://img.freepik.com/free-photo/top-view-fresh-vegetables-various-spices-small-bowls-wooden-spoons-table-free-space_140725-140454.jpg");
-    background-size: cover;
-    background-position: center;
-    filter: blur(7px);
-    z-index: -2;
-  }
+/* ===== Background Image Portrait Effect ===== */
+.bg-portrait {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://img.freepik.com/free-photo/top-view-fresh-vegetables-various-spices-small-bowls-wooden-spoons-table-free-space_140725-140454.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(7px);
+  z-index: -2;
+}
 
-  .bg-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
-    z-index: -1;
-  }
+.bg-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  z-index: -1;
+}
 
-  /* ===== Navbar ===== */
-  .top-navbar {
-    position: fixed;
-    top: 0; width: 100%;
-    padding: 10px 25px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  }
+/* ===== Navbar ===== */
+.top-navbar {
+  position: fixed;
+  top: 0; width: 100%;
+  padding: 10px 25px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
 
-  .nav-center {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .nav-logo { width: 38px; height: 38px; }
-  .nav-title { color: white; font-size: 22px; font-weight: bold; letter-spacing: 0.4px; }
-  .nav-back-btn {
-    position: absolute; right: 20px;
-    padding: 6px 16px;
-    background: rgba(0,0,0,0.65); color: white;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 7px; cursor: pointer;
-    transition: 0.3s ease;
-  }
-  .nav-back-btn:hover { background: rgba(0,0,0,0.85); }
+.nav-logo { width: 38px; height: 38px; }
+.nav-title { color: white; font-size: 22px; font-weight: bold; letter-spacing: 0.4px; }
 
-  .container { margin-top: 90px; }
-  body { background-color: transparent; font-family: 'Segoe UI', sans-serif; }
-  .app-title { color: #ffe7d1; font-weight: bold; font-size: 2rem; }
+.container { margin-top: 90px; }
+body { background-color: transparent; font-family: 'Segoe UI', sans-serif; }
+.app-title { color: #ffe7d1; font-weight: bold; font-size: 2rem; }
 
-  /* ===== Recipe Grid (Zomato-like) ===== */
-  #recipeList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-  }
+/* ===== Round Clear Filters Button (small circular) ===== */
+.clear-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s;
+  padding: 0;
+  line-height: 1;
+}
+.clear-btn:hover {
+  transform: scale(1.06);
+  background: rgba(255,255,255,1);
+}
 
-  .card {
-    border-radius: 15px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-  }
-  .card:hover {
-    transform: scale(1.04);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.18);
-  }
+/* ===== Recipe Grid (Zomato-like) ===== */
+#recipeList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
 
-  .card-img-top {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+}
 
-  .card-body {
-    padding: 12px 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+.card-img-top {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
 
-  .card-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
+.card-body {
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .card-text {
-    font-size: 14px;
-    color: #555;
-    flex-grow: 1;
-    margin-bottom: 10px;
-  }
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
 
-  /* Button group (View, Edit, Delete in one line) */
-  .btn-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
-  }
-  .btn-group .btn {
-    padding: 6px 0;
-    font-size: 13px;
-    border-radius: 6px;
-  }
+.card-text {
+  font-size: 14px;
+  color: #555;
+  flex-grow: 1;
+  margin-bottom: 10px;
+}
 
-  /* ===== Modal ===== */
-  .modal-bg {
-    position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.55);
-    display:none; justify-content:center; align-items:center;
-    z-index:20000;
-  }
-  .modal-box {
-    background: #905d5d;
-    padding: 20px;
-    border-radius: 12px;
-    width: 420px;
-    max-width: 95%;
-    max-height: 90vh;
-    overflow-y: auto;
-    margin-top: 25px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-  }
+/* Button group (View, Edit, Delete in one line) */
+.btn-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+.btn-group .btn {
+  padding: 6px 0;
+  font-size: 13px;
+  border-radius: 6px;
+}
 
-  /* ===== Responsive ===== */
-  @media (max-width: 1200px){#recipeList{grid-template-columns:repeat(3,1fr);}}
-  @media (max-width: 992px){#recipeList{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width: 576px){
-    #recipeList{grid-template-columns:1fr;}
-    .card-img-top{height:140px;}
-    .modal-box{width:92%;}
-  }
+/* ===== Modal ===== */
+.modal-bg {
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.55);
+  display:none; justify-content:center; align-items:center;
+  z-index:20000;
+}
+.modal-box {
+  background: #905d5d;
+  padding: 20px;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin-top: 25px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  color: white;
+}
+
+textarea, input, select {
+  background: rgba(255,255,255,0.95);
+  color: #111;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1200px){#recipeList{grid-template-columns:repeat(3,1fr);}}
+@media (max-width: 992px){#recipeList{grid-template-columns:repeat(2,1fr);}}
+@media (max-width: 576px){
+  #recipeList{grid-template-columns:1fr;}
+  .card-img-top{height:140px;}
+  .modal-box{width:92%;}
+  .clear-btn { width:34px; height:34px; font-size:14px; }
+}

@@ -18,14 +18,14 @@
     <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" class="nav-logo" alt="logo">
     <span class="nav-title">Recipe Manager</span>
   </div>
-  <button id="homeBackBtn" class="nav-back-btn">Back</button>
 </nav>
 
 <div class="container py-5">
-  <div class="row g-2 mb-5 mt-5">
+  <div class="row g-2 mb-5 mt-5 align-items-center">
     <div class="col-md-4">
       <input type="text" id="searchInput" class="form-control" placeholder="Search by recipe name...">
     </div>
+
     <div class="col-md-3">
       <select id="difficultyFilter" class="form-select">
         <option value="All">All Difficulty</option>
@@ -34,9 +34,16 @@
         <option value="Hard">Hard</option>
       </select>
     </div>
-    <div class="col-md-3">
+
+    <div class="col-md-2">
       <input type="number" id="timeFilter" class="form-control" placeholder="Max Prep Time (min)">
     </div>
+
+    <!-- Clear Filters (small circular icon) -->
+    <div class="col-md-1 text-start">
+      <button id="clearFiltersBtn" class="clear-btn" title="Clear filters">⟳</button>
+    </div>
+
     <div class="col-md-2 text-end">
       <button class="btn btn-success w-100" id="addRecipeBtn">+ Add Recipe</button>
     </div>
