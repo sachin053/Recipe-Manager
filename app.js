@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const difficultyFilter = document.getElementById("difficultyFilter");
   const timeFilter = document.getElementById("timeFilter");
+  const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 
   const viewModalBg = document.getElementById("viewModalBg");
   const viewTitle = document.getElementById("viewTitle");
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         description: "Creamy, spicy mushroom curry.",
         img: "https://www.cookwithkushi.com/wp-content/uploads/2020/03/IMG_3557_11-1024x650-1.jpg",
         prepTime: 20,
-        difficulty: "Medium",
+        difficulty: "Hard",
         ingredients: ["Mushroom", "Cream", "Garlic"],
         steps: ["Chop mushrooms", "Cook garlic & cream", "Add mushrooms", "Simmer & serve"]
       },
@@ -54,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ingredients: ["Paneer", "Tomatoes", "Butter", "Cream", "Spices"],
         steps: ["Prepare tomato gravy", "Add paneer cubes", "Add cream & butter", "Simmer & serve"]
       },
-
       {
         id: 3,
         name: "Chicken Biryani",
@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ingredients: ["Rice", "Chicken", "Spices", "Yogurt", "Onions"],
         steps: ["Marinate chicken", "Cook rice", "Layer & bake"]
       },
-
       {
         id: 4,
         name: "Vegetable Stir Fry",
@@ -76,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ingredients: ["Broccoli", "Carrot", "Bell pepper", "Soy sauce", "Garlic"],
         steps: ["Chop vegetables", "Heat oil", "Stir fry vegetables", "Add sauce & serve"]
       },
-
       {
         id: 5,
         name: "Egg Curry",
@@ -131,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("recipes", JSON.stringify(list));
   }
 
+  // ⭐⭐ FIXED TIME FILTER — IF 0 OR NEGATIVE → SHOW NO RECIPES ⭐⭐
   function applyFilters(list) {
     let filtered = [...list];
 
@@ -141,7 +140,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (diff !== "All") filtered = filtered.filter(r => r.difficulty === diff);
 
     const maxTime = Number(timeFilter.value);
-    if (maxTime > 0) filtered = filtered.filter(r => r.prepTime <= maxTime);
+
+    if (timeFilter.value !== "") {
+      if (maxTime <= 0) {
+        return []; // ❌ Return empty list if 0 or negative
+      }
+      filtered = filtered.filter(r => r.prepTime <= maxTime);
+    }
 
     return filtered;
   }
@@ -179,10 +184,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderRecipes();
 
+  // ---- LIVE FILTERS ----
   searchInput.addEventListener("input", renderRecipes);
   difficultyFilter.addEventListener("change", renderRecipes);
   timeFilter.addEventListener("input", renderRecipes);
 
+  // ⭐⭐⭐ RESET BUTTON ⭐⭐⭐
+  clearFiltersBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    difficultyFilter.value = "All";
+    timeFilter.value = "";
+    renderRecipes();
+  });
+
+  // ---- ADD NEW ----
   addRecipeBtn.addEventListener("click", () => {
     editId.value = "";
     recipeName.value = "";
@@ -206,8 +221,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const ingredients = recipeIngredients.value.split(",").map(i => i.trim()).filter(Boolean);
     const steps = recipeSteps.value.split(",").map(s => s.trim()).filter(Boolean);
 
-    if (!name || !desc || !prepTime || !difficulty) {
-      alert("Please fill all required fields!");
+    if (!name || !desc || prepTime <= 0 || !difficulty) {
+      alert("Please fill all required fields correctly!");
       return;
     }
 
@@ -226,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderRecipes();
   });
 
+  // ---- RECIPE CARD ACTIONS ----
   recipeList.addEventListener("click", e => {
     const btn = e.target.closest("button");
     if (!btn) return;
@@ -270,5 +286,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closeViewBtn.addEventListener("click", () => viewModalBg.style.display = "none");
-  homeBackBtn.addEventListener("click", () => history.back());
+  homeBackBtn?.addEventListener("click", () => history.back());
 });
