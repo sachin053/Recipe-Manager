@@ -1,3 +1,10 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* ===== Background Image Portrait Effect ===== */
 .bg-portrait {
   position: fixed;
@@ -24,7 +31,7 @@
 .top-navbar {
   position: fixed;
   top: 0; width: 100%;
-  padding: 10px 25px;
+  padding: 8px 20px;
   background: rgba(0,0,0,0.35);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.12);
@@ -37,52 +44,79 @@
 .nav-center {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
-.nav-logo { width: 38px; height: 38px; }
-.nav-title { color: white; font-size: 22px; font-weight: bold; letter-spacing: 0.4px; }
+.nav-logo {
+  width: 40px;
+  height: 40px;
+}
 
-.container { margin-top: 90px; }
-body { background-color: transparent; font-family: 'Segoe UI', sans-serif; }
+.nav-title {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+}
 
-/* ===== Clear Button ===== */
+body {
+  background-color: transparent;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  margin-top: 95px;
+}
+
+/* ===== FILTER & TOP CONTROL AREA ===== */
+
+#searchInput,
+#difficultyFilter,
+#timeFilter {
+  height: 45px !important;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
 .clear-btn {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(0,0,0,0.08);
-  display: inline-flex;
+  border: none;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.12s;
-  padding: 0;
+  transition: 0.15s ease;
 }
 .clear-btn:hover {
-  transform: scale(1.06);
-  background: rgba(255,255,255,1);
+  transform: scale(1.12);
+  background: white;
 }
 
-/* ===== Recipe Cards ===== */
+/* ===== Recipe Grid Layout ===== */
+
 #recipeList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
+  gap: 22px;
 }
 
+/* ===== Recipe Cards ===== */
+
 .card {
-  border-radius: 15px;
+  border-radius: 18px !important;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: transform 0.25s, box-shadow 0.25s;
 }
+
 .card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
 }
 
 .card-img-top {
@@ -91,76 +125,150 @@ body { background-color: transparent; font-family: 'Segoe UI', sans-serif; }
   object-fit: cover;
 }
 
-.card-body { padding: 12px 15px; }
+.card-body {
+  padding: 14px 16px !important;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-text {
+  font-size: 14px;
+  opacity: 0.8;
+  min-height: 42px;
+}
 
 /* ===== Modal ===== */
+
 .modal-bg {
   position: fixed;
   top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.60);
+  backdrop-filter: blur(3px);
   display:none; justify-content:center; align-items:center;
   z-index:20000;
 }
+
 .modal-box {
   background: #905d5d;
-  padding: 20px;
-  border-radius: 12px;
-  width: 420px;
-  max-width: 95%;
-  max-height: 90vh;
+  padding: 22px;
+  border-radius: 14px;
+  width: 460px;
+  max-width: 94%;
+  max-height: 92vh;
   overflow-y: auto;
-  margin-top: 25px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  margin-top: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.30);
   color: white;
 }
 
+.modal-box input,
+.modal-box textarea,
+.modal-box select {
+  border-radius: 10px !important;
+}
+
 /* ===== Footer ===== */
+
 .footer {
   width: 100%;
   background: #000;
-  padding: 18px 15px;
+  padding: 22px 15px;
   text-align: center;
   color: #fff;
-  margin-top: 40px;
+  margin-top: 50px;
   border-top: 1px solid rgba(255,255,255,0.15);
 }
 
 .footer-title {
   font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #fff;
+  font-size: 17px;
 }
 
 .footer-quote {
   font-size: 15px;
-  font-style: italic;
-  letter-spacing: 0.3px;
-  margin-bottom: 4px;
   opacity: 0.9;
+  font-style: italic;
 }
 
 .footer-credit {
   font-size: 14px;
-  opacity: 0.88;
+  opacity: 0.9;
+  margin-top: 4px;
 }
 
-.footer-credit .italic {
-  font-style: italic;
-}
-
-.footer-credit .bold {
+.bold {
   font-weight: 600;
-  font-style: normal;
 }
 
-.purple-heart {
-  color: #a020f0;
+/* ===== Responsive Design ===== */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .nav-title {
+    font-size: 20px;
+  }
+  #recipeList {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 576px){
-  .card-img-top{height:140px;}
-  .modal-box{width:92%;}
-  .clear-btn{width:34px; height:34px; font-size:14px;}
+/* Large phones */
+@media (max-width: 768px) {
+
+  .container {
+    margin-top: 85px;
+  }
+
+  .nav-title {
+    font-size: 18px;
+  }
+
+  .nav-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  #recipeList {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .card-img-top {
+    height: 160px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 576px) {
+
+  .top-navbar {
+    padding: 6px 15px;
+  }
+
+  .nav-title {
+    font-size: 17px;
+  }
+
+  .modal-box {
+    padding: 16px;
+    width: 92%;
+    border-radius: 12px;
+  }
+
+  #recipeList {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+
+  .clear-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .card-img-top {
+    height: 140px;
+  }
 }
